@@ -10,16 +10,14 @@ services:
     ports:
       - "80:80"
     networks: 
-      - frontend
-      - backend
+      - demo
   
   backend:
     image: nginx-backend
     build:
       context: ./backend
     networks: 
-      - backend
+      - demo
 
 networks: 
-  frontend:
-  backend:
+  demo:
