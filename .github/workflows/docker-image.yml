@@ -49,7 +49,7 @@ jobs:
           push: true
           tags: user/docker-nginx-ssl/frontend:latest
       
-      - name: Build and push backend
+      - name: Build backend
         if: ${{ steps.vars.outputs.short_ref != 'master' &&  github.event_name == 'pull_request'}}
         uses: docker/build-push-action@v2
         with:
@@ -57,7 +57,7 @@ jobs:
           push: false
           tags: user/docker-nginx-ssl/backend:latest
           
-      - name: Build and push frontend
+      - name: Build frontend
         if: ${{ steps.vars.outputs.short_ref != 'master' &&  github.event_name == 'pull_request'}}
         uses: docker/build-push-action@v2
         with:
