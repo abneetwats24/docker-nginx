@@ -8,9 +8,12 @@ services:
       args:
         - REACT_APP_SERVICES_HOST=/services/m
     ports:
-      - "80:80"
+      - "443:443"
     networks: 
       - demo
+    volumes:
+      - /etc/ssl/private/nginx.key:/etc/ssl/private/nginx.key
+      - /etc/ssl/certs/nginx.crt:/etc/ssl/certs/nginx.crt
   
   backend:
     image: nginx-backend
