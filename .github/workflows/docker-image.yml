@@ -12,6 +12,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+     
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+      - name: Check output
+        run: echo ${{ steps.vars.outputs.short_ref }}
       
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -26,6 +33,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
       - name: Build and push backend
+        if: ${{ steps.vars.outputs.short_ref == 'master' &&  github.event_name != 'pull_request'}}
         uses: docker/build-push-action@v2
         with:
           context: ./backend
@@ -33,8 +41,25 @@ jobs:
           tags: user/docker-nginx-ssl/backend:latest
           
       - name: Build and push frontend
+        if: ${{ steps.vars.outputs.short_ref == 'master' &&  github.event_name != 'pull_request'}}
         uses: docker/build-push-action@v2
         with:
           context: ./frontend
           push: true
+          tags: user/docker-nginx-ssl/frontend:latest
+      
+      - name: Build and push backend
+        if: ${{ steps.vars.outputs.short_ref != 'master' &&  github.event_name == 'pull_request'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./backend
+          push: false
+          tags: user/docker-nginx-ssl/backend:latest
+          
+      - name: Build and push frontend
+        if: ${{ steps.vars.outputs.short_ref != 'master' &&  github.event_name == 'pull_request'}}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./frontend
+          push: false
           tags: user/docker-nginx-ssl/frontend:latest
