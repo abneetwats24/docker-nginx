@@ -39,7 +39,7 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: user/docker-nginx-ssl/backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-nginx-ssl-backend:latest
           
       - name: Build and push frontend
         if: ${{ steps.vars.outputs.short_ref == 'master' &&  github.event_name != 'pull_request'}}
@@ -47,7 +47,7 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: user/docker-nginx-ssl/frontend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-nginx-ssl-frontend:latest
       
       - name: Build backend
         if: ${{ steps.vars.outputs.short_ref != 'master' &&  github.event_name == 'pull_request'}}
@@ -55,7 +55,7 @@ jobs:
         with:
           context: ./backend
           push: false
-          tags: user/docker-nginx-ssl/backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-nginx-ssl-backend:latest
           
       - name: Build frontend
         if: ${{ steps.vars.outputs.short_ref != 'master' &&  github.event_name == 'pull_request'}}
@@ -63,4 +63,4 @@ jobs:
         with:
           context: ./frontend
           push: false
-          tags: user/docker-nginx-ssl/frontend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-nginx-ssl-frontend:latest
