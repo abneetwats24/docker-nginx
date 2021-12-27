@@ -17,7 +17,6 @@ RUN yarn build
 FROM nginx
 
 RUN apt -y install openssl
-# RUN openssl req -batch -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx.key -out /etc/ssl/certs/nginx.crt 2>/dev/null
 
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
