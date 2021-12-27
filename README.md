@@ -1,5 +1,13 @@
 # docker-nginx-ssl
 
+---
+
+## Cyber Pipeline Status
+
+![CI builds](https://github.com/abneetwats24/docker-nginx-ssl/actions/workflows/docker-image.yml/badge.svg)
+
+---
+
 ## To generate self signed certificate run following command as root
 
 ```bash
